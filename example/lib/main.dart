@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -50,7 +52,7 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> show(title, author) async {
     try {
-      await MediaNotification.show(title: title, author: author);
+      await MediaNotification.show(title: title, author: author, image:"/storage/emulated/0/Pictures/Reddit/c4c7164.jpg" );
       setState(() => status = 'play');
     } on PlatformException {
 

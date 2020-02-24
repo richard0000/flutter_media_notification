@@ -17,11 +17,12 @@ class MediaNotification {
     });
   }
 
-  static Future show({@required title, @required author, play = true}) async {
+  static Future show({@required title, @required author, play = true, image=""}) async {
     final Map<String, dynamic> params = <String, dynamic>{
       'title': title,
       'author': author,
-      'play': play
+      'play': play,
+      'image':image
     };
     await _channel.invokeMethod('show', params);
 

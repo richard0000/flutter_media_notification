@@ -5,7 +5,10 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.widget.RemoteViews;
+
+import java.io.File;
 
 import androidx.core.app.NotificationCompat;
 
@@ -20,9 +23,10 @@ public class NotificationPanel {
     private RemoteViews remoteView;
     private String title;
     private String author;
+    private String image;
     private boolean play;
 
-    public NotificationPanel(Context parent, String title, String author, boolean play) {
+    public NotificationPanel(Context parent, String title, String author, boolean play, String image) {
         this.parent = parent;
         this.title = title;
         this.author = author;
@@ -41,6 +45,15 @@ public class NotificationPanel {
 
         remoteView.setTextViewText(R.id.title, title);
         remoteView.setTextViewText(R.id.author, author);
+
+        File imgFile = new  File(image);
+        if(imgFile.exists()){
+            remoteView.setImageViewUri(R.id.img, Uri.parse(imgFile.getAbsolutePath()));
+        }
+
+
+
+
 
         if (this.play) {
             remoteView.setImageViewResource(R.id.toggle, R.drawable.baseline_pause_black_48);
