@@ -19,7 +19,7 @@ class MediaNotification {
   }
 
   static Future show(
-      {@required title, @required author, play = true, String image = ""}) async {
+      {@required title, @required author, play = true, String image = "", Color bgColor, Color titleColor, Color subtitleColor, Color iconColor, Icon previousIcon}) async {
     //switching the image from a URI to a byteArray for Android with offset and length;
     List<int> imagebytes;
     if (image != null) {
@@ -30,13 +30,25 @@ class MediaNotification {
     }
 
 
+
     final Map<String, dynamic> params = <String, dynamic>{
       'title': title,
       'author': author,
       'play': play,
       'image': imagebytes,
       'length': imagebytes != null ? imagebytes.length : 0,
-      'offset': 0
+      'offset': 0,
+      'bgColor': bgColor != null
+          ? '#${bgColor.value.toRadixString(16)}'
+          : '#${Colors.white.value.toRadixString(16)}',
+      'titleColor': titleColor != null ? '#${titleColor.value.toRadixString(
+          16)}' : '#${Colors.black.value.toRadixString(16)}',
+      'subtitleColor': subtitleColor != null ? '#${subtitleColor.value
+          .toRadixString(16)}' : '#838383',
+      // this color is arbitrary and can be changed but it keeps a good look
+      'iconColor': iconColor != null
+          ? '#${iconColor.value.toRadixString(16)}'
+          : '#${Colors.black.value.toRadixString(16)}',
     };
     await _channel.invokeMethod('show', params);
 

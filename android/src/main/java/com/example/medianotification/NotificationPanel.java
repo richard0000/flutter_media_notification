@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
@@ -24,14 +25,22 @@ public class NotificationPanel {
     private String author;
     private String image;
     private boolean play;
-
-    public NotificationPanel(Context parent, String title, String author, boolean play, byte[] image, int length, int offset) {
+    private String bgColor;
+    private String titleColor;
+    private String subtitleColor;
+    private String iconColor;
+    public NotificationPanel(Context parent, String title, String author, boolean play, byte[] image, int length, int offset, String bgColor, String titleColor, String subtitleColor, String iconColor ) {
         this.parent = parent;
         this.title = title;
         this.author = author;
         this.play = play;
+        this.bgColor = bgColor;
+        this.titleColor=titleColor;
+        this.subtitleColor=subtitleColor;
+        this.iconColor=iconColor;
 
         nBuilder = new NotificationCompat.Builder(parent, "media_notification")
+                .setContentTitle("Player")
                 .setSmallIcon(R.drawable.ic_stat_music_note)
                 .setPriority(Notification.PRIORITY_DEFAULT)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -46,24 +55,39 @@ public class NotificationPanel {
         remoteView.setTextViewText(R.id.author, author);
 
         if (image != null) {
-            /*File imgFile = new File(image);
-            if (imgFile.exists()) {
 
-                remoteView.setImageViewUri(R.id.img, Uri.parse(imgFile.getAbsolutePath()));
-            }*/
             Bitmap BmpImage = BitmapFactory.decodeByteArray(image,offset,length);
 
             remoteView.setImageViewBitmap(R.id.img, BmpImage);
         }
 
 
+        //setting background Color
 
+        if(bgColor!=null){
+            remoteView.setInt(R.id.layout, "setBackgroundColor",
+                    Color.parseColor(bgColor));
+        }
+        if(titleColor!=null){
+            remoteView.setTextColor(R.id.title, Color.parseColor(titleColor));
+        }
+        if(subtitleColor!=null){
+            remoteView.setTextColor(R.id.author, Color.parseColor(subtitleColor));
+        }
+        if(iconColor!=null){
+            Bitmap PrevBmp = BitmapFactory.decodeResource(parent.getResources(), R.drawable.baseline_skip_previous_black_36);
+            remoteView.setImageViewBitmap(R.id.prev, changeBitmapColor(PrevBmp,Color.parseColor(iconColor)));
+            Bitmap NextBmp = BitmapFactory.decodeResource(parent.getResources(), R.drawable.baseline_skip_next_black_36);
+            remoteView.setImageViewBitmap(R.id.next, changeBitmapColor(NextBmp,Color.parseColor(iconColor)));
+        }
 
 
         if (this.play) {
-            remoteView.setImageViewResource(R.id.toggle, R.drawable.baseline_pause_black_48);
+            Bitmap toggleBmp = BitmapFactory.decodeResource(parent.getResources(), R.drawable.baseline_pause_black_48);
+            remoteView.setImageViewBitmap(R.id.toggle, changeBitmapColor(toggleBmp,Color.parseColor(iconColor)));
         } else {
-            remoteView.setImageViewResource(R.id.toggle, R.drawable.baseline_play_arrow_black_48);
+            Bitmap toggleBmp = BitmapFactory.decodeResource(parent.getResources(), R.drawable.baseline_play_arrow_black_48);
+            remoteView.setImageViewBitmap(R.id.toggle, changeBitmapColor(toggleBmp,Color.parseColor(iconColor)));
         }
 
         setListeners(remoteView);
@@ -81,6 +105,10 @@ public class NotificationPanel {
                 .setAction("toggle")
                 .putExtra("title", this.title)
                 .putExtra("author", this.author)
+                .putExtra("bgColor", this.bgColor)
+                .putExtra("titleColor", this.titleColor)
+                .putExtra("subtitleColor", this.subtitleColor)
+                .putExtra("iconColor", this.iconColor)
                 .putExtra("action", !this.play ? "play" : "pause");
         PendingIntent pendingIntent = PendingIntent.getBroadcast(parent, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         view.setOnClickPendingIntent(R.id.toggle, pendingIntent);
@@ -107,6 +135,34 @@ public class NotificationPanel {
 
     public void notificationCancel() {
         nManager.cancel(1);
+    }
+
+    public static Bitmap changeBitmapColor(Bitmap srcBmp, int dstColor)
+    {
+
+        int width = srcBmp.getWidth();
+        int height = srcBmp.getHeight();
+
+        float srcHSV[] = new float[3];
+        float dstHSV[] = new float[3];
+
+        Bitmap dstBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+
+        for (int row = 0; row < height; row++) {
+            for (int col = 0; col < width; col++) {
+                int pixel = srcBmp.getPixel(col, row);
+                int alpha = Color.alpha(pixel);
+                Color.colorToHSV(pixel, srcHSV);
+                Color.colorToHSV(dstColor, dstHSV);
+
+                // If it area to be painted set only value of original image
+
+                //dstHSV[2] = srcHSV[2];  // value
+                dstBitmap.setPixel(col, row, Color.HSVToColor(alpha, dstHSV));
+            }
+        }
+
+        return dstBitmap;
     }
 }
 

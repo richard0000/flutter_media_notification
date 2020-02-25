@@ -39,7 +39,11 @@ public class MediaNotificationPlugin implements MethodCallHandler {
               final int length = call.argument("length");
               final int offset = call.argument("offset");
               final boolean play = call.argument("play");
-              show(title, author, play,image,length,offset);
+              final String bgColor = call.argument("bgColor");
+              final String titleColor = call.argument("titleColor");
+              final String subtitleColor = call.argument("subtitleColor");
+              final String iconColor = call.argument("iconColor");
+              show(title, author, play,image,length,offset,bgColor,titleColor,subtitleColor,iconColor);
               result.success(null);
               break;
             case "hide":
@@ -67,7 +71,7 @@ public class MediaNotificationPlugin implements MethodCallHandler {
       });
   }
 
-  public static void show(String title, String author, boolean play, byte[] image, int length, int offset) {
+  public static void show(String title, String author, boolean play, byte[] image, int length, int offset, String bgColor, String titleColor, String subtitleColor, String iconColor ) {
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
           int importance = NotificationManager.IMPORTANCE_DEFAULT;
           NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_ID, importance);
@@ -77,7 +81,7 @@ public class MediaNotificationPlugin implements MethodCallHandler {
           notificationManager.createNotificationChannel(channel);
       }
 
-      nPanel = new NotificationPanel(registrar.context(), title, author, play,image,length,offset);
+      nPanel = new NotificationPanel(registrar.context(), title, author, play,image,length,offset,bgColor,titleColor,subtitleColor,iconColor);
   }
 
   private void hide() {

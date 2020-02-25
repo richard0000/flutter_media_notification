@@ -58,7 +58,15 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> show(title, author) async {
     try {
-      await MediaNotification.show(title: title, author: author, image:"/storage/emulated/0/Pictures/Reddit/c4c7164.jpg" );
+      await MediaNotification.show(
+          title: title,
+          author: author,
+          image: "/storage/emulated/0/Pictures/Reddit/c4c7164.jpg",
+          bgColor: Colors.deepPurple,
+          iconColor: Colors.blue,
+          subtitleColor: Colors.deepOrange,
+          titleColor: Colors.orange
+      );
       setState(() => status = 'play');
     } on PlatformException {
 

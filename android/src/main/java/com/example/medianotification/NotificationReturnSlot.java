@@ -23,8 +23,12 @@ public class NotificationReturnSlot extends BroadcastReceiver {
                 String action = intent.getStringExtra("action");
                 int length = intent.getIntExtra("length",0);
                 int offset = intent.getIntExtra("offset",100);
+                String bgColor = intent.getStringExtra("bgColor");
+                String titleColor = intent.getStringExtra("titleColor");
+                String subtitleColor = intent.getStringExtra("subtitleColor");
+                String iconColor = intent.getStringExtra("iconColor");
 
-                MediaNotificationPlugin.show(title, author, action.equals("play"),image,length,offset);
+                MediaNotificationPlugin.show(title, author, action.equals("play"),image,length,offset,bgColor,titleColor,subtitleColor,iconColor);
                 MediaNotificationPlugin.callEvent(action);
                 break;
             case "select":
