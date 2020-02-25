@@ -21,11 +21,12 @@ class MediaNotification {
   static Future show(
       {@required title, @required author, play = true, String image = ""}) async {
     //switching the image from a URI to a byteArray for Android with offset and length;
-
-    File imgFile = File(image);
     List<int> imagebytes;
-    if (imgFile != null) {
-      imagebytes = imgFile.readAsBytesSync();
+    if (image != null) {
+      File imgFile = File(image);
+      if (imgFile != null) {
+        imagebytes = imgFile.readAsBytesSync();
+      }
     }
 
 
