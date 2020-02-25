@@ -19,10 +19,12 @@ public class NotificationReturnSlot extends BroadcastReceiver {
             case "toggle":
                 String title = intent.getStringExtra("title");
                 String author = intent.getStringExtra("author");
-                String image = intent.getStringExtra("image");
+                byte[] image = intent.getByteArrayExtra("image");
                 String action = intent.getStringExtra("action");
+                int length = intent.getIntExtra("length",0);
+                int offset = intent.getIntExtra("offset",100);
 
-                MediaNotificationPlugin.show(title, author, action.equals("play"),image);
+                MediaNotificationPlugin.show(title, author, action.equals("play"),image,length,offset);
                 MediaNotificationPlugin.callEvent(action);
                 break;
             case "select":

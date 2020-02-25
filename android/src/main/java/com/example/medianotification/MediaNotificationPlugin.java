@@ -35,9 +35,11 @@ public class MediaNotificationPlugin implements MethodCallHandler {
           case "show":
               final String title = call.argument("title");
               final String author = call.argument("author");
-              final String image = call.argument("image");
+              final byte[] image = call.argument("image");
+              final int length = call.argument("length");
+              final int offset = call.argument("offset");
               final boolean play = call.argument("play");
-              show(title, author, play,image);
+              show(title, author, play,image,length,offset);
               result.success(null);
               break;
             case "hide":
@@ -65,7 +67,7 @@ public class MediaNotificationPlugin implements MethodCallHandler {
       });
   }
 
-  public static void show(String title, String author, boolean play, String image) {
+  public static void show(String title, String author, boolean play, byte[] image, int length, int offset) {
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
           int importance = NotificationManager.IMPORTANCE_DEFAULT;
           NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_ID, importance);
@@ -75,7 +77,7 @@ public class MediaNotificationPlugin implements MethodCallHandler {
           notificationManager.createNotificationChannel(channel);
       }
 
-      nPanel = new NotificationPanel(registrar.context(), title, author, play,image);
+      nPanel = new NotificationPanel(registrar.context(), title, author, play,image,length,offset);
   }
 
   private void hide() {

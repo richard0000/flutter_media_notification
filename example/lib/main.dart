@@ -5,8 +5,14 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:media_notification/media_notification.dart';
+import 'package:simple_permissions/simple_permissions.dart';
 
-void main() => runApp(new MyApp());
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SimplePermissions.requestPermission(Permission.ReadExternalStorage);
+  runApp(new MyApp());
+}
 
 class MyApp extends StatefulWidget {
   @override

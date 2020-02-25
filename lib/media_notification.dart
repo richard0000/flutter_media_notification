@@ -1,5 +1,6 @@
 import 'dart:async';
-
+import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 
@@ -17,12 +18,24 @@ class MediaNotification {
     });
   }
 
-  static Future show({@required title, @required author, play = true, image=""}) async {
+  static Future show(
+      {@required title, @required author, play = true, String image = ""}) async {
+    //switching the image from a URI to a byteArray for Android with offset and length;
+
+    File imgFile = File(image);
+    List<int> imagebytes;
+    if (imgFile != null) {
+      imagebytes = imgFile.readAsBytesSync();
+    }
+
+
     final Map<String, dynamic> params = <String, dynamic>{
       'title': title,
       'author': author,
       'play': play,
-      'image':image
+      'image': imagebytes,
+      'length': imagebytes.length,
+      'offset': 0
     };
     await _channel.invokeMethod('show', params);
 
