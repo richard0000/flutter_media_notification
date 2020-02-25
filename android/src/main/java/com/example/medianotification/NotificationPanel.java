@@ -46,9 +46,11 @@ public class NotificationPanel {
         remoteView.setTextViewText(R.id.title, title);
         remoteView.setTextViewText(R.id.author, author);
 
-        File imgFile = new  File(image);
-        if(imgFile.exists()){
-            remoteView.setImageViewUri(R.id.img, Uri.parse(imgFile.getAbsolutePath()));
+        if (image != null) {
+            File imgFile = new File(image);
+            if (imgFile.exists()) {
+                remoteView.setImageViewUri(R.id.img, Uri.parse(imgFile.getAbsolutePath()));
+            }
         }
 
 
