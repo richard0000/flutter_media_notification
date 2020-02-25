@@ -3,32 +3,36 @@
     android:layout_width="fill_parent"
     android:layout_height="90dp"
     android:padding="10dp">
+
     <TextView
-        android:textSize="15dp"
-        android:textColor="#000"
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="9dp"
         android:layout_marginTop="2dp"
-        android:singleLine="true"
+        android:layout_marginRight="293dp"
+        android:layout_toLeftOf="@+id/img"
         android:ellipsize="end"
         android:maxLines="1"
-        />
+        android:singleLine="true"
+        android:textColor="#000"
+        android:textSize="15dp" />
+
     <TextView
-        android:textSize="14dp"
-        android:textColor="#838383"
         android:id="@+id/author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_below="@id/title"
+        android:layout_alignParentLeft="true"
         android:layout_marginLeft="9dp"
-        android:singleLine="true"
+        android:layout_marginRight="293dp"
+        android:layout_toLeftOf="@+id/img"
         android:ellipsize="end"
         android:maxLines="1"
-        />
+        android:singleLine="true"
+        android:textColor="#838383"
+        android:textSize="14dp" />
 
     <ImageView
         android:id="@+id/img"
