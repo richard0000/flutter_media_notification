@@ -35,7 +35,7 @@ class MediaNotification {
       'author': author,
       'play': play,
       'image': imagebytes,
-      'length': imagebytes.length,
+      'length': imagebytes != null ? imagebytes.length : 0,
       'offset': 0
     };
     await _channel.invokeMethod('show', params);
