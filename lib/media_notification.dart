@@ -40,7 +40,7 @@ class MediaNotification {
       'author': author,
       'play': play,
       'image': imagebytes != null ? imagebytes : BitmapImage,
-      'length': imagebytes != null ? imagebytes.length : 0,
+      'length': imagebytes != null ? imagebytes.length : BitmapImage.length,
       'offset': 0,
       'bgColor': bgColor != null
           ? '#${bgColor.value.toRadixString(16)}'
