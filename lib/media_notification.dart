@@ -18,8 +18,12 @@ class MediaNotification {
     });
   }
 
+  /**
+   *  params @BitmapImage a list of bytes representing an image, has less priority when @image is present
+   */
   static Future show(
-      {@required title, @required author, play = true, String image = "", Color bgColor, Color titleColor, Color subtitleColor, Color iconColor, Icon previousIcon}) async {
+      {@required title, @required author, play = true, String image = "", List<
+          int> BitmapImage, Color bgColor, Color titleColor, Color subtitleColor, Color iconColor, Icon previousIcon}) async {
     //switching the image from a URI to a byteArray for Android with offset and length;
     List<int> imagebytes;
     if (image != null) {
@@ -35,7 +39,7 @@ class MediaNotification {
       'title': title,
       'author': author,
       'play': play,
-      'image': imagebytes,
+      'image': imagebytes != null ? imagebytes : BitmapImage,
       'length': imagebytes != null ? imagebytes.length : 0,
       'offset': 0,
       'bgColor': bgColor != null

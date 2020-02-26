@@ -59,6 +59,8 @@ public class NotificationPanel {
             Bitmap BmpImage = BitmapFactory.decodeByteArray(image,offset,length);
 
             remoteView.setImageViewBitmap(R.id.img, BmpImage);
+        }else{
+            remoteView.setImageViewBitmap(R.id.img, null);
         }
 
 
