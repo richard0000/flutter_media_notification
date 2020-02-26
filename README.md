@@ -33,7 +33,9 @@ MediaNotification.hide();
 
 ### Screenshots
 
-| <img src="scrs.png" width="250"> |
+|                                           |                                           |
+| ----------------------------------------- | ----------------------------------------- |
+| <img src="screenshots/scrs.png" width="250"> | <img src="screenshots/scrs2.png" width="250"> |
 
 ## Getting Started With the development
 
