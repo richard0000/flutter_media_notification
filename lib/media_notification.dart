@@ -30,7 +30,7 @@ class MediaNotification {
     @required title,
     @required author,
     play = true,
-    String image,
+    String imageUrl,
     List<int> bitmapImage,
     Color bgColor,
     Color titleColor,
@@ -39,7 +39,7 @@ class MediaNotification {
     Icon previousIcon}) async {
 
     /// Switching the image from a URI to a byteArray for Android with offset and length;
-    ByteData bytesImage = await rootBundle.load('assets/images/icon.png');
+    ByteData bytesImage = await rootBundle.load(imageUrl);
     List<int> imagebytes = byteDatatoList(bytesImage);
 
     final Map<String, dynamic> params = <String, dynamic> {
