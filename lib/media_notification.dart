@@ -25,10 +25,10 @@ class MediaNotification {
     return buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
   }
 
-  ///  params @BitmapImage a list of bytes representing an image, has less priority when @image is present
+  ///  Params @BitmapImage a list of bytes representing an image, has less priority when @image is present
   static Future show({
     @required title,
-    @required author,
+    @required subtitle,
     play = true,
     ByteData imageUrl,
     List<int> bitmapImage,
@@ -36,14 +36,15 @@ class MediaNotification {
     Color titleColor,
     Color subtitleColor,
     Color iconColor,
-    Icon previousIcon}) async {
+    Icon previousIcon
+  }) async {
 
     /// Switching the image from a URI to a byteArray for Android with offset and length;
     List<int> imagebytes = byteDatatoList(imageUrl);
 
     final Map<String, dynamic> params = <String, dynamic> {
       'title': title,
-      'author': author,
+      'author': subtitle,
       'play': play,
       'image': (imagebytes != null) ? imagebytes : bitmapImage,
       'length': (imagebytes != null) ? imagebytes.length : ((bitmapImage != null) ? bitmapImage.length: 0),
