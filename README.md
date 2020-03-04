@@ -19,9 +19,9 @@ try {
         subtitleColor: Colors.deepOrange, // The subtitle color
         titleColor: Colors.orange // the title color
       );
-    } on PlatformException {
-
-    }
+} on PlatformException catch(e) {
+      print("Error: ${e.message}")
+}
 ```
 
 You can call the hide method to hide the Media controls like follow :
