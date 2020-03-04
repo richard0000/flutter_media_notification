@@ -30,7 +30,7 @@ class MediaNotification {
     @required title,
     @required subtitle,
     play = true,
-    ByteData imageUrl,
+    ByteData byteImage,
     List<int> bitmapImage,
     Color bgColor,
     Color titleColor,
@@ -40,7 +40,7 @@ class MediaNotification {
   }) async {
 
     /// Switching the image from a URI to a byteArray for Android with offset and length;
-    List<int> imagebytes = byteDatatoList(imageUrl);
+    List<int> imagebytes = byteDatatoList(byteImage);
 
     final Map<String, dynamic> params = <String, dynamic> {
       'title': title,
